@@ -1,0 +1,37 @@
+==================================================
+STUDENT ANALYTICS REPORT
+==================================================
+
+Total records loaded  : 25
+Clean records         : 23
+Records with errors   : 2
+
+OVERALL STATISTICS
+------------------------------
+Count   : 23
+Mean    : 71.4
+Median  : 76.0
+Std Dev : 18.4
+Min     : 33.0
+Max     : 96.0
+Pass rate (>=40): 91%
+
+BY DEPARTMENT
+------------------------------
+  CS    n=9  mean=78.4  min=38.0  max=96.0
+  EE    n=4  mean=72.5  min=42.0  max=92.0
+  IT    n=4  mean=61.8  min=33.0  max=82.0
+  ME    n=6  mean=66.5  min=47.0  max=85.0
+
+GRADE DISTRIBUTION
+------------------------------
+  A:   9   39.1%  ███████
+  B:   8   34.8%  ██████
+  C:   4   17.4%  ███
+  F:   2    8.7%  █
+
+ERRORS
+------------------------------
+  Row 13: 'Amit Sharma' — missing/invalid score
+  Row 21: 'Vivek Jain' — missing/invalid score
+==================================================

@@ -1,0 +1,5 @@
+dept,count,avg_score,min_score,max_score
+CS,9,78.4,38.0,96.0
+EE,4,72.5,42.0,92.0
+IT,4,61.8,33.0,82.0
+ME,6,66.5,47.0,85.0

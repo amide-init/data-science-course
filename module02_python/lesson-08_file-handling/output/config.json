@@ -1,0 +1,18 @@
+{
+  "app": "Student Analytics v1.0",
+  "settings": {
+    "passing_score": 40,
+    "grade_thresholds": {
+      "A": 80,
+      "B": 60,
+      "C": 40
+    },
+    "valid_depts": [
+      "CS",
+      "ME",
+      "IT",
+      "EE"
+    ]
+  },
+  "output_dir": "output"
+}
