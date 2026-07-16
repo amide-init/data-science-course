@@ -75,8 +75,9 @@ Existing project folders:
 - `projects/titatnic/` — Titanic dataset, full DS lifecycle (Ask → Get → Clean →
   Explore → Communicate) combining NumPy, Pandas, and Matplotlib
 - `projects/customer-churn/` — customer churn prediction, full 10-step ML lifecycle (Problem
-  Definition → Monitoring & Maintenance, no separate tuning step) using Pandas, NumPy, Matplotlib,
-  and scikit-learn
+  Definition → Data Collection → Data Cleaning → EDA → Preprocessing & Feature Engineering →
+  Model Selection → Training → Evaluation → Deployment → Monitoring, no separate tuning step;
+  cleaning happens before EDA) using Pandas, NumPy, Matplotlib, and scikit-learn
 
 When asked to generate a new standalone project, create it as a new
 `projects/<project-name>/` folder following this same structure rather than nesting

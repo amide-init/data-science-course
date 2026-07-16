@@ -2,10 +2,12 @@
 
 ## What this project is
 A hands-on project that walks students through the full **10-step Machine Learning lifecycle**
-(Problem Definition → Data Collection → Data Understanding → Data Cleaning & Preprocessing →
-Feature Engineering → Model Selection → Model Training → Model Evaluation → Deployment →
-Monitoring & Maintenance) on a real churn dataset, combining **NumPy**, **Pandas**,
-**Matplotlib**, and **scikit-learn** in one place.
+(Problem Definition → Data Collection → Data Cleaning → Data Understanding (EDA) →
+Preprocessing & Feature Engineering → Model Selection → Model Training → Model Evaluation →
+Deployment → Monitoring & Maintenance) on a real churn dataset, combining **NumPy**, **Pandas**,
+**Matplotlib**, and **scikit-learn** in one place. Cleaning is done *before* exploring, since a
+chart or groupby result built on broken rows can be quietly misleading — encoding and feature
+engineering happen afterward, once the data is understood.
 
 ## Dataset
 - `data/train-data.csv` — ~440,000 customers used to train the model
@@ -22,8 +24,8 @@ Subscription Type, Contract Length, Total Spend, Last Interaction, Churn` (the t
 - `notebook_lite.ipynb` — a lean, code-first version of the same pipeline for live-coding in
   class: short one-line section headers, no essays, no exercises — just the runnable steps.
 - `script.py` — clean runnable version of the teaching code (no exercises). Running it prints
-  metrics, saves a trained model (`churn_model.joblib`), and saves a confusion-matrix chart as a
-  PNG file.
+  metrics, saves a trained model (`churn_model.joblib`), and saves the subscription-mix,
+  churn-by-gender, and confusion-matrix charts as PNG files.
 - `data/` — the training and holdout datasets used throughout.
 
 ## How to run
@@ -39,12 +41,13 @@ python script.py
 
 ## What students learn
 1. **Problem Definition & Data Collection** — framing a churn question and loading real data
-2. **Data Understanding (EDA)** — checking class balance and spotting strong churn signals
-   (contract length, support calls) with Pandas and Matplotlib, including a pie chart of the
-   customer mix by subscription type
-3. **Data Cleaning & Preprocessing** — dropping broken rows and an ID column, one-hot encoding
-   text columns with `pd.get_dummies`
-4. **Feature Engineering** — creating a new `Spend_Per_Tenure` feature
+2. **Data Cleaning** — dropping broken rows and an ID column *before* exploring, so the analysis
+   that follows is trustworthy
+3. **Data Understanding (EDA)** — checking class balance and spotting strong churn signals
+   (contract length, gender, support calls, correlation with churn) with Pandas and Matplotlib,
+   including a pie chart of the customer mix by subscription type and a churn-by-gender bar chart
+4. **Preprocessing & Feature Engineering** — one-hot encoding text columns with `pd.get_dummies`
+   and creating a new `Spend_Per_Tenure` feature
 5. **Model Selection & Training** — comparing a Logistic Regression baseline against a Random
    Forest with scikit-learn
 6. **Model Evaluation** — accuracy, precision, recall, F1, and confusion matrices

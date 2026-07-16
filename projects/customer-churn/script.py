@@ -29,15 +29,28 @@ def load_data(path="data/train-data.csv"):
     return df
 
 
-# ── Step 3: Data Understanding (EDA) ──
+# ── Step 3: Data Cleaning ──
+def clean_data(df):
+    df = df.dropna().drop(columns=["CustomerID"])
+    return df
+
+
+# ── Step 4: Data Understanding (EDA) ──
 def explore_data(df):
     churn_rate = df["Churn"].value_counts(normalize=True) * 100
     print("\nChurn distribution (%):")
     print(churn_rate.round(1))
 
     churn_by_contract = df.groupby("Contract Length")["Churn"].mean() * 100
+    churn_by_gender = df.groupby("Gender")["Churn"].mean() * 100
     print("\nChurn rate by contract length (%):")
     print(churn_by_contract.round(1))
+    print("\nChurn rate by gender (%):")
+    print(churn_by_gender.round(1))
+
+    numeric_df = df.select_dtypes(include="number")
+    print("\nCorrelation with Churn:")
+    print(numeric_df.corr()["Churn"].sort_values(ascending=False).round(3))
 
     # Pie chart: customer mix by subscription type - a genuine part-to-whole split
     # of the customer base into three roughly even categories.
@@ -54,14 +67,20 @@ def explore_data(df):
     plt.savefig("subscription_mix.png")
     plt.close()
 
-    return churn_by_contract
+    # Bar chart: churn rate by gender
+    plt.figure(figsize=(5, 4))
+    plt.bar(churn_by_gender.index, churn_by_gender.values, color=["#e87ba4", "#2a78d6"])
+    plt.title("Churn Rate by Gender")
+    plt.ylabel("Churn Rate (%)")
+    plt.ylim(0, 100)
+    plt.savefig("churn_by_gender.png")
+    plt.close()
 
 
-# ── Step 4-5: Data Cleaning, Preprocessing & Feature Engineering ──
-def clean_and_engineer(df):
-    df = df.dropna().drop(columns=["CustomerID"])
-    df["Spend_Per_Tenure"] = df["Total Spend"] / (df["Tenure"] + 1)
+# ── Step 5: Preprocessing & Feature Engineering ──
+def preprocess_and_engineer(df):
     df_encoded = pd.get_dummies(df, columns=CATEGORICAL_COLUMNS, drop_first=True)
+    df_encoded["Spend_Per_Tenure"] = df_encoded["Total Spend"] / (df_encoded["Tenure"] + 1)
     return df_encoded
 
 
@@ -172,9 +191,10 @@ def check_on_holdout(model, feature_columns, val_accuracy, path="data/test-data.
 
 if __name__ == "__main__":
     df = load_data()
+    df = clean_data(df)
     explore_data(df)
 
-    df_encoded = clean_and_engineer(df)
+    df_encoded = preprocess_and_engineer(df)
     models = train_models(df_encoded)
     rf_pred = evaluate_models(models)
 
@@ -193,4 +213,4 @@ if __name__ == "__main__":
     val_accuracy = accuracy_score(models["y_val"], rf_pred)
     check_on_holdout(random_forest, feature_columns, val_accuracy)
 
-    print("\nCharts saved as subscription_mix.png and confusion_matrices.png")
+    print("\nCharts saved as subscription_mix.png, churn_by_gender.png, and confusion_matrices.png")
