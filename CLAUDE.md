@@ -58,12 +58,41 @@ Each module folder contains:
 - ...
 - `project/`
 
+## Standalone Projects Folder (`projects/`)
+Separate from the `moduleXX_topic/project/` folders (which are tied to a specific
+module's lesson sequence), the top-level `projects/` folder holds standalone,
+cross-cutting practice projects — e.g. full data-science-lifecycle walkthroughs that
+aren't scoped to one module's syllabus.
+
+Each project gets its own subfolder: `projects/<project-name>/`, following the same
+file convention as module projects:
+- `notebook.ipynb` — full project walkthrough
+- `script.py` — clean runnable version (optional)
+- `data/` — dataset file(s) used (e.g. `data/titanic.csv`)
+- `README.md` — project brief: what it teaches, dataset source, files, how to run
+
+Existing project folders:
+- `projects/titatnic/` — Titanic dataset, full DS lifecycle (Ask → Get → Clean →
+  Explore → Communicate) combining NumPy, Pandas, and Matplotlib
+- `projects/customer-churn/` — customer churn project (in progress)
+
+When asked to generate a new standalone project, create it as a new
+`projects/<project-name>/` folder following this same structure rather than nesting
+it under a module.
+
 ## Directory Structure
 ```
 data-science/
 ├── CLAUDE.md                        ← this file
 ├── COURSE_STRUCTURE.md              ← full roadmap reference
 ├── TEACHING_GUIDE.md                ← pedagogy notes for instructors
+├── projects/                        ← standalone cross-module projects
+│   ├── titatnic/
+│   │   ├── notebook.ipynb
+│   │   ├── script.py
+│   │   ├── data/titanic.csv
+│   │   └── README.md
+│   └── customer-churn/
 ├── module01_intro/
 │   ├── overview.md
 │   ├── lesson-01_what-is-ds/
