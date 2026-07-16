@@ -74,8 +74,9 @@ file convention as module projects:
 Existing project folders:
 - `projects/titatnic/` — Titanic dataset, full DS lifecycle (Ask → Get → Clean →
   Explore → Communicate) combining NumPy, Pandas, and Matplotlib
-- `projects/customer-churn/` — customer churn prediction, full 11-step ML lifecycle (Problem
-  Definition → Monitoring & Maintenance) using Pandas, NumPy, Matplotlib, and scikit-learn
+- `projects/customer-churn/` — customer churn prediction, full 10-step ML lifecycle (Problem
+  Definition → Monitoring & Maintenance, no separate tuning step) using Pandas, NumPy, Matplotlib,
+  and scikit-learn
 
 When asked to generate a new standalone project, create it as a new
 `projects/<project-name>/` folder following this same structure rather than nesting

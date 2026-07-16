@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import joblib
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
@@ -38,6 +38,21 @@ def explore_data(df):
     churn_by_contract = df.groupby("Contract Length")["Churn"].mean() * 100
     print("\nChurn rate by contract length (%):")
     print(churn_by_contract.round(1))
+
+    # Pie chart: customer mix by subscription type - a genuine part-to-whole split
+    # of the customer base into three roughly even categories.
+    subscription_counts = df["Subscription Type"].value_counts()
+    plt.figure(figsize=(5, 5))
+    plt.pie(
+        subscription_counts.values,
+        labels=subscription_counts.index,
+        autopct="%1.0f%%",
+        colors=["#2a78d6", "#008300", "#e87ba4"],
+        startangle=90,
+    )
+    plt.title("Customer Mix by Subscription Type")
+    plt.savefig("subscription_mix.png")
+    plt.close()
 
     return churn_by_contract
 
@@ -122,19 +137,7 @@ def evaluate_models(models):
     return rf_pred
 
 
-# ── Step 9: Model Improvement (Tuning) ──
-def tune_model(models):
-    param_grid = {"n_estimators": [50, 100], "max_depth": [8, None]}
-    grid_search = GridSearchCV(
-        RandomForestClassifier(random_state=42, n_jobs=-1), param_grid, cv=3, scoring="f1"
-    )
-    grid_search.fit(models["X_train"], models["y_train"])
-    print("\nBest parameters:", grid_search.best_params_)
-    print("Best cross-validated F1 score:", round(grid_search.best_score_, 4))
-    return grid_search.best_estimator_
-
-
-# ── Step 10: Deployment ──
+# ── Step 9: Deployment ──
 def save_model(model, feature_columns, path="churn_model.joblib"):
     joblib.dump(model, path)
     print(f"\nModel saved to {path}. It expects {len(feature_columns)} input columns.")
@@ -150,7 +153,7 @@ def predict_churn(customer, model, columns):
     return f"{'Churn' if prediction == 1 else 'Stay'} (probability of churn: {probability:.1%})"
 
 
-# ── Step 11: Monitoring & Maintenance ──
+# ── Step 10: Monitoring & Maintenance ──
 def check_on_holdout(model, feature_columns, val_accuracy, path="data/test-data.csv"):
     test_df = pd.read_csv(path).dropna().drop(columns=["CustomerID"])
     test_df["Spend_Per_Tenure"] = test_df["Total Spend"] / (test_df["Tenure"] + 1)
@@ -175,19 +178,19 @@ if __name__ == "__main__":
     models = train_models(df_encoded)
     rf_pred = evaluate_models(models)
 
-    best_model = tune_model(models)
+    random_forest = models["random_forest"]
     feature_columns = models["X_train"].columns.tolist()
 
-    save_model(best_model, feature_columns)
+    save_model(random_forest, feature_columns)
 
     sample_customer = {
         "Age": 42, "Gender": "Male", "Tenure": 3, "Usage Frequency": 2,
         "Support Calls": 9, "Payment Delay": 20, "Subscription Type": "Basic",
         "Contract Length": "Monthly", "Total Spend": 150, "Last Interaction": 28,
     }
-    print("\nSample prediction:", predict_churn(sample_customer, best_model, feature_columns))
+    print("\nSample prediction:", predict_churn(sample_customer, random_forest, feature_columns))
 
     val_accuracy = accuracy_score(models["y_val"], rf_pred)
-    check_on_holdout(best_model, feature_columns, val_accuracy)
+    check_on_holdout(random_forest, feature_columns, val_accuracy)
 
-    print("\nConfusion matrix chart saved as confusion_matrices.png")
+    print("\nCharts saved as subscription_mix.png and confusion_matrices.png")

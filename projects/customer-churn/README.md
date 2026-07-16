@@ -1,10 +1,10 @@
 # Customer Churn Prediction — The Complete Machine Learning Lifecycle
 
 ## What this project is
-A hands-on project that walks students through the full **11-step Machine Learning lifecycle**
+A hands-on project that walks students through the full **10-step Machine Learning lifecycle**
 (Problem Definition → Data Collection → Data Understanding → Data Cleaning & Preprocessing →
-Feature Engineering → Model Selection → Model Training → Model Evaluation → Model Improvement →
-Deployment → Monitoring & Maintenance) on a real churn dataset, combining **NumPy**, **Pandas**,
+Feature Engineering → Model Selection → Model Training → Model Evaluation → Deployment →
+Monitoring & Maintenance) on a real churn dataset, combining **NumPy**, **Pandas**,
 **Matplotlib**, and **scikit-learn** in one place.
 
 ## Dataset
@@ -18,7 +18,9 @@ Subscription Type, Contract Length, Total Spend, Last Interaction, Churn` (the t
 
 ## Files
 - `notebook.ipynb` — the full teaching walkthrough. Explains each lifecycle stage, then cleans,
-  encodes, engineers features, trains and tunes models, and ends with practice exercises.
+  encodes, engineers features, trains models, and ends with practice exercises.
+- `notebook_lite.ipynb` — a lean, code-first version of the same pipeline for live-coding in
+  class: short one-line section headers, no essays, no exercises — just the runnable steps.
 - `script.py` — clean runnable version of the teaching code (no exercises). Running it prints
   metrics, saves a trained model (`churn_model.joblib`), and saves a confusion-matrix chart as a
   PNG file.
@@ -27,7 +29,8 @@ Subscription Type, Contract Length, Total Spend, Last Interaction, Churn` (the t
 ## How to run
 ```bash
 # From the projects/customer-churn/ folder
-jupyter notebook notebook.ipynb
+jupyter notebook notebook.ipynb        # full walkthrough
+jupyter notebook notebook_lite.ipynb   # lean, code-first version
 ```
 or run the script version directly:
 ```bash
@@ -37,15 +40,15 @@ python script.py
 ## What students learn
 1. **Problem Definition & Data Collection** — framing a churn question and loading real data
 2. **Data Understanding (EDA)** — checking class balance and spotting strong churn signals
-   (contract length, support calls) with Pandas and Matplotlib
+   (contract length, support calls) with Pandas and Matplotlib, including a pie chart of the
+   customer mix by subscription type
 3. **Data Cleaning & Preprocessing** — dropping broken rows and an ID column, one-hot encoding
    text columns with `pd.get_dummies`
 4. **Feature Engineering** — creating a new `Spend_Per_Tenure` feature
 5. **Model Selection & Training** — comparing a Logistic Regression baseline against a Random
    Forest with scikit-learn
 6. **Model Evaluation** — accuracy, precision, recall, F1, and confusion matrices
-7. **Model Improvement** — tuning Random Forest with `GridSearchCV`
-8. **Deployment** — saving a model with `joblib` and writing a `predict_churn()` helper
-9. **Monitoring & Maintenance** — checking the deployed model against `test-data.csv` and seeing
+7. **Deployment** — saving a model with `joblib` and writing a `predict_churn()` helper
+8. **Monitoring & Maintenance** — checking the deployed model against `test-data.csv` and seeing
    firsthand why validation accuracy alone is never the end of the story (a real, honest example
    of data drift, not a scripted one)
