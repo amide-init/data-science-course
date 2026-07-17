@@ -74,10 +74,10 @@ file convention as module projects:
 Existing project folders:
 - `projects/titatnic/` — Titanic dataset, full DS lifecycle (Ask → Get → Clean →
   Explore → Communicate) combining NumPy, Pandas, and Matplotlib
-- `projects/customer-churn/` — customer churn prediction, full 10-step ML lifecycle (Problem
-  Definition → Data Collection → Data Cleaning → EDA → Preprocessing & Feature Engineering →
-  Model Selection → Training → Evaluation → Deployment → Monitoring, no separate tuning step;
-  cleaning happens before EDA) using Pandas, NumPy, Matplotlib, and scikit-learn
+- `projects/customer-churn/` — customer churn prediction, full 7-step Data Science lifecycle
+  (Define → Collect → Clean → Explore → Model → Evaluate → Deploy, matching Module 1's lifecycle;
+  preprocessing, feature engineering, model selection, and training all happen together under
+  Model; cleaning happens before Explore) using Pandas, NumPy, Matplotlib, and scikit-learn
 
 When asked to generate a new standalone project, create it as a new
 `projects/<project-name>/` folder following this same structure rather than nesting

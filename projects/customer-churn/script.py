@@ -1,5 +1,5 @@
 """
-Customer Churn Prediction - The Complete Machine Learning Lifecycle
+Customer Churn Prediction - The Complete Data Science Lifecycle
 Clean, runnable version of notebook.ipynb (teaching code only, no exercises).
 """
 
@@ -22,20 +22,20 @@ from sklearn.metrics import (
 CATEGORICAL_COLUMNS = ["Gender", "Subscription Type", "Contract Length"]
 
 
-# ── Step 2: Data Collection ──
+# ── Step 2: Collect ──
 def load_data(path="data/train-data.csv"):
     df = pd.read_csv(path)
     print("Shape of dataset:", df.shape)
     return df
 
 
-# ── Step 3: Data Cleaning ──
+# ── Step 3: Clean ──
 def clean_data(df):
     df = df.dropna().drop(columns=["CustomerID"])
     return df
 
 
-# ── Step 4: Data Understanding (EDA) ──
+# ── Step 4: Explore (EDA) ──
 def explore_data(df):
     churn_rate = df["Churn"].value_counts(normalize=True) * 100
     print("\nChurn distribution (%):")
@@ -77,14 +77,14 @@ def explore_data(df):
     plt.close()
 
 
-# ── Step 5: Preprocessing & Feature Engineering ──
+# ── Step 5: Model — prepare data ──
 def preprocess_and_engineer(df):
     df_encoded = pd.get_dummies(df, columns=CATEGORICAL_COLUMNS, drop_first=True)
     df_encoded["Spend_Per_Tenure"] = df_encoded["Total Spend"] / (df_encoded["Tenure"] + 1)
     return df_encoded
 
 
-# ── Step 7: Model Training ──
+# ── Step 5: Model — select & train ──
 def train_models(df_encoded):
     X = df_encoded.drop(columns=["Churn"])
     y = df_encoded["Churn"].astype(int)
@@ -114,7 +114,7 @@ def train_models(df_encoded):
     }
 
 
-# ── Step 8: Model Evaluation ──
+# ── Step 6: Evaluate ──
 def evaluate_models(models):
     log_reg_pred = models["log_reg"].predict(models["X_val_scaled"])
     rf_pred = models["random_forest"].predict(models["X_val"])
@@ -156,7 +156,7 @@ def evaluate_models(models):
     return rf_pred
 
 
-# ── Step 9: Deployment ──
+# ── Step 7: Deploy — save & serve ──
 def save_model(model, feature_columns, path="churn_model.joblib"):
     joblib.dump(model, path)
     print(f"\nModel saved to {path}. It expects {len(feature_columns)} input columns.")
@@ -172,7 +172,7 @@ def predict_churn(customer, model, columns):
     return f"{'Churn' if prediction == 1 else 'Stay'} (probability of churn: {probability:.1%})"
 
 
-# ── Step 10: Monitoring & Maintenance ──
+# ── Step 7: Deploy — monitor ──
 def check_on_holdout(model, feature_columns, val_accuracy, path="data/test-data.csv"):
     test_df = pd.read_csv(path).dropna().drop(columns=["CustomerID"])
     test_df["Spend_Per_Tenure"] = test_df["Total Spend"] / (test_df["Tenure"] + 1)
